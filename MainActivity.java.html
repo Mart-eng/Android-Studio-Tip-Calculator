@@ -1,0 +1,182 @@
+<html>
+<head>
+<title>MainActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #000080; font-weight: bold;}
+.s1 { color: #000000;}
+.s2 { color: #008000; font-weight: bold;}
+.s3 { color: #808080; font-style: italic;}
+.s4 { color: #0000ff;}
+</style>
+</head>
+<body bgcolor="#ffffff">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#c0c0c0" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MainActivity.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span>com.example.tipcalculator;
+
+<span class="s0">import </span>android.support.annotation.LongDef;
+<span class="s0">import </span>android.support.v7.app.AppCompatActivity;
+<span class="s0">import </span>android.os.Bundle;
+<span class="s0">import </span>android.text.Editable;
+<span class="s0">import </span>android.text.TextWatcher;
+<span class="s0">import </span>android.util.Log;
+<span class="s0">import </span>android.view.View;
+<span class="s0">import </span>android.widget.EditText;
+<span class="s0">import </span>android.widget.SeekBar;
+<span class="s0">import </span>android.widget.TextView;
+<span class="s0">import </span>java.text.NumberFormat;
+
+<span class="s0">import </span>org.w3c.dom.Text;
+
+<span class="s0">import </span>java.text.NumberFormat;
+
+<span class="s0">public class </span>MainActivity <span class="s0">extends </span>AppCompatActivity <span class="s0">implements </span>TextWatcher {
+
+    <span class="s0">public static final </span>String TAG = <span class="s2">&quot;MainActivity&quot;</span>;
+    <span class="s3">//declare variables for the widgets</span>
+    <span class="s0">private </span>EditText editTextBillAmount;
+    <span class="s0">private </span>SeekBar seekBar;
+
+    <span class="s0">private </span>TextView textViewTipAmount;
+    <span class="s0">private </span>TextView textViewSeekBarPercent;
+    <span class="s0">private </span>TextView textViewTotalAmount;
+
+    <span class="s3">//declare the variables for the calculations</span>
+    <span class="s0">private double </span>billAmount = <span class="s4">0</span>;
+    <span class="s0">private double </span>percent = <span class="s4">0</span>;
+    <span class="s0">private double </span>tip = <span class="s4">0</span>;
+
+
+    <span class="s3">//set the number formats to be used for the $ amounts and % amounts</span>
+    <span class="s0">private static final </span>NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+    <span class="s0">private static final </span>NumberFormat percentFormat = NumberFormat.getPercentInstance();
+
+
+    @Override
+    <span class="s0">protected void </span>onCreate(Bundle savedInstanceState) {
+        <span class="s0">super</span>.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        <span class="s3">//add Listeners to Widgets</span>
+
+        <span class="s3">//listener for the edit text view</span>
+        editTextBillAmount = (EditText)findViewById(R.id.editText_EnterAmount);
+        editTextBillAmount.addTextChangedListener((TextWatcher)<span class="s0">this</span>);
+
+        <span class="s3">//listener for tip text view</span>
+        textViewTipAmount = (TextView)findViewById(R.id.textView_tipAmount);
+
+        <span class="s3">//textViewTipAmount.setText(seekbarprogress);</span>
+
+        textViewSeekBarPercent = (TextView)findViewById(R.id.textView_seekBarLabel);
+
+
+        <span class="s3">//listener for total amount text view</span>
+        textViewTotalAmount = (TextView)findViewById(R.id.textView_totalAmount);
+
+
+        <span class="s3">//listener for seekbar</span>
+        seekBar = (SeekBar)findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(<span class="s0">new </span>SeekBar.OnSeekBarChangeListener() {
+
+            @Override
+            <span class="s0">public void </span>onProgressChanged(SeekBar seekBar, <span class="s0">int </span>progress, <span class="s0">boolean </span>fromUser) {
+
+                <span class="s3">//String p = percentFormat.format(progress);</span>
+                percent = ((<span class="s0">double</span>)progress) / <span class="s4">100</span>;
+                textViewSeekBarPercent.setText(Integer.toString(progress)+<span class="s2">&quot;%&quot;</span>);
+                calculate();
+
+
+            }
+
+            @Override
+            <span class="s0">public void </span>onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            <span class="s0">public void </span>onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
+
+    @Override
+    <span class="s0">public void </span>beforeTextChanged(CharSequence charSequence, <span class="s0">int </span>i, <span class="s0">int </span>i1, <span class="s0">int </span>i2){
+
+         <span class="s3">/* Note:   int i, int i1, and int i2 
+       represent start, before, count respectively 
+       The charSequence is converted to a String and parsed to a double for you  */</span>
+    }
+
+    <span class="s0">public void </span>afterTextChanged(CharSequence charSequence, <span class="s0">int </span>i, <span class="s0">int </span>i1, <span class="s0">int </span>i2){
+
+    }
+    @Override
+    <span class="s0">public void </span>onTextChanged(CharSequence charSequence, <span class="s0">int </span>i, <span class="s0">int </span>i1, <span class="s0">int </span>i2){
+        <span class="s0">try </span>{
+
+
+            Log.d(TAG, <span class="s2">&quot;inside onTextChanged method: charSequence=&quot; </span>+ charSequence);
+            <span class="s3">//surround risky calculations with try catch (what if billAmount is 0?</span>
+            <span class="s3">//charSequence is converted to a String and parsed to a double for you</span>
+            billAmount = Float.parseFloat(charSequence.toString());
+
+            <span class="s3">//billAmount = Double.parseDouble(charSequence.toString()) / 100;</span>
+            <span class="s3">//textViewTotalAmount.setText(NumberFormat.getNumberInstance().format(billAmount));</span>
+
+            <span class="s3">//if ()</span>
+            Log.d(TAG, <span class="s2">&quot;Bill Amount=&quot; </span>+ billAmount);
+
+            <span class="s3">//setText on the textView</span>
+            <span class="s3">//textViewTotalAmount.setText(currencyFormat.format(billAmount));</span>
+
+            <span class="s3">//perform tip and total calculation and update UI by calling calculate</span>
+        } <span class="s0">catch</span>(NumberFormatException e) { <span class="s3">// stops the app from crashing if there's an empty string in the editText field</span>
+            billAmount = <span class="s4">0</span>;
+            tip = <span class="s4">0</span>;
+            <span class="s3">//textViewTipAmount.setText(currencyFormat.format(0));</span>
+            <span class="s3">//textViewTotalAmount.setText(currencyFormat.format(0));</span>
+        }
+        calculate();
+
+    }
+
+    @Override
+    <span class="s0">public void </span>afterTextChanged(Editable s) {
+
+    }
+
+    <span class="s3">//calculate and display tip and total amounts</span>
+    <span class="s0">private void </span>calculate(){
+        Log.d(TAG, <span class="s2">&quot;inside calculate method&quot;</span>);
+
+
+       <span class="s3">// format percent and display in percentTextView</span>
+      <span class="s3">//textViewTipAmount.setText(percentFormat.format(percent));</span>
+
+       <span class="s3">// calculate the tip and total</span>
+
+         tip = (billAmount * percent);
+
+        Log.d(<span class="s2">&quot;Tip&quot;</span>, String.valueOf(tip));
+        textViewTipAmount.setText(currencyFormat.format(tip));
+<span class="s3">//</span>
+<span class="s3">//      //use the tip example to do the same for the Total</span>
+        <span class="s0">double </span>total = billAmount + tip;
+        textViewTotalAmount.setText(currencyFormat.format(total));
+
+       <span class="s3">// display tip and total formatted as currency</span>
+       <span class="s3">//user currencyFormat instead of percentFormat to set the textViewTip</span>
+       <span class="s3">// tipTextView.setText(currencyFormat.format(tip));</span>
+       <span class="s3">//use the tip example to do the same for the Total</span>
+    }
+
+}</pre>
+</body>
+</html>
