@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">Tip Calculator</string>
-    <string name="EditText_enter_amount">Enter Amount:</string>
-    <string name="textView_total_string">Total</string>
-    <string name="textView_tip_string">Tip</string>
-    <string name="textview_seekbarlabel_string">%</string>
-    <string name="textView_placeHolder_string">0</string>
-</resources>
