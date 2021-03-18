@@ -101,8 +101,8 @@
 
     <TextView
         android:id="@+id/textView_split_label"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
         android:layout_row="4"
         android:layout_column="1"
         android:layout_gravity="start"
@@ -127,12 +127,10 @@
         android:id="@+id/spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
         android:layout_row="5"
         android:layout_column="1"
         android:background="@color/purple_200"
-        android:popupBackground="@color/purple_200"
-        android:layout_gravity="center_horizontal"/>
+        android:popupBackground="@color/purple_200" />
 
     <RadioGroup
         android:id="@+id/radio_group_split"

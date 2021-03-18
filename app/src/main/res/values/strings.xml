@@ -5,4 +5,24 @@
     <string name="textView_tip_string">Tip</string>
     <string name="textview_seekbarlabel_string">%</string>
     <string name="textView_placeHolder_string">0</string>
+    <string name="textview_split">Split per person:</string>
+    <string name="rb_text_round_the_total_up">Round the total up</string>
+    <string name="rb_text_round_the_tip_up">Round the tip up</string>
+    <string name="rb_text_no_rounding">No Rounding</string>
+    <string name="menu_item_info">Info</string>
+    <string name="menu_item_share">Share</string>
+    <string-array name="tip_split_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
