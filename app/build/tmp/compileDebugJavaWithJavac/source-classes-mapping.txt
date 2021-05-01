@@ -1,7 +1,7 @@
-com/example/tipcalculator/BuildConfig.java
- com.example.tipcalculator.BuildConfig
 com/example/tipcalculator/InfoFragment.java
  com.example.tipcalculator.InfoFragment
+com/example/tipcalculator/BuildConfig.java
+ com.example.tipcalculator.BuildConfig
 com/example/tipcalculator/MainActivity.java
  com.example.tipcalculator.MainActivity
  com.example.tipcalculator.MainActivity$1

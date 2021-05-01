@@ -13,10 +13,11 @@ public class InfoFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
         return new AlertDialog.Builder(getActivity())
                 .setTitle("Tip Calculator")
                 .setMessage("This is a tip calculator. It supports up\n" +
-                        " to a 30% tip and splitting the bill for up to 10 people.").create();
+                        " to a 30% and splitting the bill for up to 10 people.").create();
     }
 
 //    @Override
